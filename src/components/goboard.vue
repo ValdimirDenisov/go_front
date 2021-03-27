@@ -2,25 +2,25 @@
     <div class="conteiner">
         <div class="table-conteiner9" v-if="size == 9">
             <div class="topline9">
-                <div class="topline-item9" v-for="item in arrLetters9">
+                <div class="topline-item9" v-for="item in arrLetters9" :key="item">
                     {{item}}
                 </div>
             </div>
             <div class="second-table-conteiner9">
                 <div class="left-line9">
-                    <div class="left-line-item9" v-for="item in arrDigit9">
+                    <div class="left-line-item9" v-for="item in arrDigit9" :key="item"> 
                         {{item}}
                     </div>
                 </div>
                 <div class="table9">
                     <div class="pole-conteiner9">
-                        <div class="table-column9" v-for="item in (size - 1)">
-                            <div class="table-column-item9" v-for="item in (size - 1)"></div>
+                        <div class="table-column9" v-for="item in (size - 1)" :key="item">
+                            <div class="table-column-item9" v-for="item in (size - 1)" :key="item"></div>
                         </div>
                     </div>
                     <div class="game-container9">
-                        <div class="table-column-play9" v-for="item in size">
-                            <div class="table-column-play-item9" v-for="item in size">
+                        <div class="table-column-play9" v-for="item in size" :key="item">
+                            <div class="table-column-play-item9" v-for="item in size" :key="item">
                                 <div class="item-target9"></div>
                             </div>
                         </div>
@@ -32,25 +32,25 @@
         
         <div class="table-conteiner13" v-if="size == 13">
             <div class="topline13">
-                <div class="topline-item13" v-for="item in arrLetters13">
+                <div class="topline-item13" v-for="item in arrLetters13" :key="item">
                     {{item}}
                 </div>
             </div>
             <div class="second-table-conteiner13">
                 <div class="left-line13">
-                    <div class="left-line-item13" v-for="item in arrDigit13">
+                    <div class="left-line-item13" v-for="item in arrDigit13" :key="item">
                         {{item}}
                     </div>
                 </div>
                 <div class="table13">
                     <div class="pole-conteiner13">
-                        <div class="table-column13" v-for="item in (size - 1)">
-                            <div class="table-column-item13" v-for="item in (size - 1)"></div>
+                        <div class="table-column13" v-for="item in (size - 1)" :key="item">
+                            <div class="table-column-item13" v-for="item in (size - 1)" :key="item"></div>
                         </div>
                     </div>
                     <div class="game-container13">
-                        <div class="table-column-play13" v-for="item in size">
-                            <div class="table-column-play-item13" v-for="item in size">
+                        <div class="table-column-play13" v-for="item in size" :key="item">
+                            <div class="table-column-play-item13" v-for="item in size" :key="item">
                                 <div class="item-target13"></div>
                             </div>
                         </div>
@@ -61,25 +61,25 @@
 
         <div class="table-conteiner19" v-if="size == 19">
             <div class="topline19">
-                <div class="topline-item19" v-for="item in arrLetters19">
+                <div class="topline-item19" v-for="item in arrLetters19" :key="item">
                     {{item}}
                 </div>
             </div>
             <div class="second-table-conteiner19">
                 <div class="left-line19">
-                    <div class="left-line-item19" v-for="item in arrDigit19">
+                    <div class="left-line-item19" v-for="item in arrDigit19" :key="item">
                         {{item}}
                     </div>
                 </div>
                 <div class="table19">
                     <div class="pole-conteiner19">
-                        <div class="table-column19" v-for="item in (size - 1)">
-                            <div class="table-column-item19" v-for="item in (size - 1)"></div>
+                        <div class="table-column19" v-for="item in (size - 1)" :key="item">
+                            <div class="table-column-item19" v-for="item in (size - 1)" :key="item"></div>
                         </div>
                     </div>
                     <div class="game-container19">
-                        <div class="table-column-play19" v-for="item in size">
-                            <div class="table-column-play-item19" v-for="item in size">
+                        <div class="table-column-play19" v-for="item in size" :key="item">
+                            <div class="table-column-play-item19" v-for="item in size" :key="item">
                                 <div class="item-target19"></div>
                             </div>
                         </div>
@@ -98,13 +98,8 @@
             size: Number
         }, 
         mounted() {
-            let classes = 'black-ball' + String(this.size);
-            let res = document.querySelectorAll('.table-column-play-item' + String(this.size));
-            for (let i = 0; i < res.length; i++) {
-                res[i].addEventListener('click', function() {
-                    res[i].classList.add(classes);
-                });
-            }
+            this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)));
+            this.setButtons(this.matrix);
         }, data() {
             return {
                 arrDigit9: ['9', '8', '7', '6', '5', '4', '3', '2', '1'],
@@ -113,6 +108,87 @@
                 arrLetters13: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N'],
                 arrDigit19: ['19', '18', '17', '16', '15', '14','13', '12', '11', '10', '9', '8', '7', '6', '5', '4', '3', '2', '1'],
                 arrLetters19: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'],
+            }
+        }, methods: {
+            // dfs(i, j, ) {
+            //     this.visited[i][j] = 1;
+            //     m = this.matrix;
+            //     if (m[])
+            // },
+            getVisited(res) {
+                let matrix = [];
+                let mas = [];
+                let inf = 123;
+                for (let i = 0; i <= this.size + 1; i++) {
+                    mas.push(inf);
+                }
+                matrix.push(mas);
+                mas = [];
+                mas.push(inf);
+                for (let i = 0; i < res.length; i++) {
+                    mas.push(0);
+                    if ((i + 1) % this.size == 0) {
+                        mas.push(inf);
+                        matrix.push(mas);
+                        mas = [];
+                        mas.push(inf);
+                    }
+                }
+                mas = [];
+                for (let i = 0; i <= this.size + 1; i++) {
+                    mas.push(inf);
+                }
+                matrix.push(mas);
+                return matrix;
+            },
+            toMatrix(res) {
+                let matrix = [];
+                let mas = [];
+                let inf = 123;
+                for (let i = 0; i <= this.size + 1; i++) {
+                    mas.push(inf);
+                }
+                matrix.push(mas);
+                mas = [];
+                mas.push(inf);
+                for (let i = 0; i < res.length; i++) {
+                    mas.push(res[i]);
+                    if ((i + 1) % this.size == 0) {
+                        mas.push(inf);
+                        matrix.push(mas);
+                        mas = [];
+                        mas.push(inf);
+                    }
+                }
+                mas = [];
+                for (let i = 0; i <= this.size + 1; i++) {
+                    mas.push(inf);
+                }
+                matrix.push(mas);
+                return matrix;
+            },
+            setButtons(res) {
+                let classes_black = 'black-ball' + String(this.size);
+                let classes_white = 'white-ball' + String(this.size);
+                let x = 1;
+                for (let i = 1; i <= this.size; i++) {
+                    for (let j = 1; j <= this.size; j++) {
+                        res[i][j].innerHTML = String(i);
+                        res[i][j].addEventListener('click', function() {
+                            if (!res[i][j].classList.contains(classes_black) && !res[i][j].classList.contains(classes_white)) { 
+                                if (x == 1) {
+                                    res[i][j].classList.add(classes_black);
+                                    this.visited = this.getVisited(res);
+                                    x = x * -1;
+                                } else {
+                                    res[i][j].classList.add(classes_white);
+                                    this.visited = this.getVisited(res);
+                                    x = x * -1;
+                                }
+                            }
+                        });
+                    }
+                }
             }
         }
         

@@ -1,5 +1,5 @@
 <template>
-  <goBoard :size="13"/>    
+  <goBoard :size="9"/>    
 </template>
 
 <script>
