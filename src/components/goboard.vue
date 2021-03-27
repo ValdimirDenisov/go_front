@@ -256,6 +256,10 @@ export default {
 </script>
 
 <style>
+.conteiner {
+    box-sizing: initial;
+}
+
 .table-conteiner19 {
     width: 630px;
     height: 630px;
