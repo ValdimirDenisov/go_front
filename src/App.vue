@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <viewGame> 
+      <viewGame :players="players" :items="items" :value="value"> 
         <goBoard :size="19" />
       </viewGame>
     </v-main>
@@ -19,27 +19,44 @@ export default {
   },
 
   data: () => ({
-    players: [{
-      name: 'denisovV',
-      img: 'https://games.mail.ru/hotbox/content_files/gallery/2020/12/11/d49a024e7ade40858a10df3b8976625d.png',
-      color: 'https://pbs.twimg.com/ext_tw_video_thumb/1130497796958838784/pu/img/XZj79ABYvAjiQMJr.jpg'
-    }, {
-      name: 'XxJadxX',
-      img: 'https://pbs.twimg.com/profile_images/1092700380222406656/wkhrxlhD.jpg',
-      color: 'https://www.marmarland.com/2101/742.jpg'
-    }],
-    value: 85,
+    size: 19,
+    players: [{}, {}],
+    value: 0,
     items: [
         { header: 'Информация' },
         { title: 'Размер', subtitle: '13Х13' },
         { divider: true, inset: true },
         { title: 'Дата', subtitle: '28 марта 2021' },
         { divider: true, inset: true },
-        { title: 'Komi', subtitle: '8.5' },  
+        { title: 'Результат', subtitle: '8.5' },  
         { divider: true, inset: true },
         { title: 'Тип матча', subtitle: 'Рейтинговый' }, 
         { divider: true, inset: true },
     ],
+    URL: 'http://127.0.0.1:8080/api/game?player=RaksaRami&game_id=0'
   }),
+  mounted() {
+    this.axios.get(this.URL).then((response) => {
+      console.log(response['data']);
+      let d = response['data'];
+      this.size = d['size'];
+      this.items[1]['subtitle'] = String(d['size']) + 'X' +  String(d['size']);
+      this.items[3]['subtitle'] = d['date'];
+      this.items[5]['subtitle'] = d['score'];
+      this.items[7]['subtitle'] = d['gameType'];
+      this.players[0] = {
+        'name': d['players']['white']['name'] + ' ' + d['players']['white']['rank'],
+        'img': d['players']['white']['avatar'],
+        'color': 'https://pbs.twimg.com/ext_tw_video_thumb/1130497796958838784/pu/img/XZj79ABYvAjiQMJr.jpg',
+        'alt': 'https://i08.fotocdn.net/s121/21e9e7c76c556e45/user_l/2772715174.jpg'
+      }
+      this.players[1] = {
+        'name': d['players']['black']['name'] + ' ' + d['players']['black']['rank'],
+        'img': d['players']['black']['avatar'],
+        'color': 'https://www.marmarland.com/2101/742.jpg',
+        'alt': 'https://i08.fotocdn.net/s121/21e9e7c76c556e45/user_l/2772715174.jpg'
+      }
+    });
+  }
 };
 </script>
