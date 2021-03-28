@@ -12,7 +12,7 @@
               <v-list subheader>
                 <v-list-item v-for="player in players" :key="player">
                   <v-list-item-avatar>
-                    <v-img :alt="player.alt" :src="player.img"></v-img>
+                    <v-img :lazy-src="player.alt" :src="player.img"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
                     <v-list-item-title v-text="player.name"></v-list-item-title>
@@ -69,3 +69,9 @@ export default {
   }),
 };
 </script>
+
+<style>
+.v-image__image--preload{
+    filter: unset!important;
+}
+</style>
