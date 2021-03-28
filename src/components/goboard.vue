@@ -238,19 +238,23 @@ export default {
                     res[i][j].addEventListener('click', function () {
                         if (!res[i][j].classList.contains(classes_black) && !res[i][j].classList.contains(classes_white)) {
                             if (x == 1) {
-                                res[i][j].classList.add(classes_black);
+                                self.setPoint(res, i, j, classes_black);
                                 x = x * -1;
                             } else {
-                                res[i][j].classList.add(classes_white);
+                                self.setPoint(res, i, j, classes_white);
                                 x = x * -1;
                             }
-                            self.checkNeighbours(i, j);
                         }
                     });
                 }
             }
+        },
+        setPoint(res, i, j, color) {
+            res[i][j].classList.add(color);
+            this.checkNeighbours(i, j);
         }
     }
+    
 
 }
 </script>
