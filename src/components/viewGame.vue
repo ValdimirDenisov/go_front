@@ -23,16 +23,16 @@
                 </v-list-item>
               </v-list>
               Управление игрой
-              <v-slider v-model="value" step="1" thumb-label ticks></v-slider>
+              <v-slider v-model="value" :max="max" step="1" thumb-label></v-slider>
               <v-row no-gutters >
                 <v-col>
                   <v-card class="pa-2" outlined tile>
-                    <v-btn block color="primary" elevation="2" large>&lt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value - 1">&lt;</v-btn>
                   </v-card>
                 </v-col>
                 <v-col>
                   <v-card class="pa-2" outlined tile>
-                    <v-btn block color="primary" elevation="2" large>&gt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value + 1">&gt;</v-btn>
                   </v-card>
                 </v-col>
               </v-row>
@@ -63,7 +63,7 @@
 <script>
 export default {
   name: 'viewGame',
-  props: ['players', 'items', 'value'],
+  props: ['players', 'items', 'value', 'max'],
   data: () => ({
     
   }),

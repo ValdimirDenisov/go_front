@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-main>
-            <viewGame :players="players" :items="items" :value="value">
+            <viewGame :players="players" :items="items" :value="value" :max="max">
                 <goBoard :size="19"/>
             </viewGame>
         </v-main>
@@ -23,6 +23,7 @@ export default {
         size: 19,
         players: [{}, {}],
         value: 0,
+        max: 15,
         items: [
             {header: 'Информация'},
             {title: 'Размер', subtitle: '13Х13'},
@@ -41,6 +42,7 @@ export default {
             console.log(response['data']);
             let d = response['data'];
             this.size = +d['size'];
+            this.max = d['moves'].length;
             this.items[1]['subtitle'] = d['size'] + 'X' + d['size'];
             this.items[3]['subtitle'] = d['date'];
             this.items[5]['subtitle'] = d['score'];
