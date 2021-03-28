@@ -95,10 +95,12 @@
 export default {
     name: 'goBoard',
     props: {
-        size: Number
+        size: Number,
+        value: Number
     },
     mounted() {
         this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)));
+        this.value.onChange()
         this.setButtons(this.matrix);
     }, data() {
         return {
@@ -252,6 +254,9 @@ export default {
         setPoint(res, i, j, color) {
             res[i][j].classList.add(color);
             this.checkNeighbours(i, j);
+        },
+        updateBoard(current_move){
+            console.log(current_move)
         }
     }
     

@@ -1,8 +1,8 @@
 <template>
     <v-app>
         <v-main>
-            <viewGame :players="players" :items="items" :value="value" :max="max">
-                <goBoard :size="19"/>
+            <viewGame :players="players" :items="items" :value="value" :max="max" v-on:changeValue="change($event)">
+                <goBoard :size="19" :value="value"/>
             </viewGame>
         </v-main>
     </v-app>
@@ -60,6 +60,13 @@ export default {
                 'alt': 'https://it.oplus.ru/uploads/gallery/user.png'
             }
         });
+    },
+    methods: {
+        change(a){
+            this.value = a
+            goBoard.methods.updateBoard(this.value)
+        }
     }
+
 };
 </script>

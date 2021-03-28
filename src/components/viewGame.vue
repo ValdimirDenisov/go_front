@@ -1,6 +1,6 @@
 <template>
     <v-container class="grey lighten-5">
-        <v-row no-gutters class=" d-flex align-stretch"> 
+        <v-row no-gutters class=" d-flex align-stretch">
           <v-col md="auto" class="d-flex">
             <v-card class="pa-2"  outlined tile>
               <slot> </slot>
@@ -23,16 +23,18 @@
                 </v-list-item>
               </v-list>
               Управление игрой
-              <v-slider v-model="value" :max="max" step="1" thumb-label></v-slider>
+              <v-slider v-model="value" :max="max" step="1" thumb-label @change="update_slider()"></v-slider>
               <v-row no-gutters >
                 <v-col>
                   <v-card class="pa-2" outlined tile>
-                    <v-btn block color="primary" elevation="2" large @click="value = value - 1">&lt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value - 1;update_slider()" v-if="value > 0">&lt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value - 1;update_slider()" disabled v-if="value === 0">&lt;</v-btn>
                   </v-card>
                 </v-col>
                 <v-col>
                   <v-card class="pa-2" outlined tile>
-                    <v-btn block color="primary" elevation="2" large @click="value = value + 1">&gt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value + 1;update_slider()" v-if="value < max">&gt;</v-btn>
+                    <v-btn block color="primary" elevation="2" large @click="value = value + 1;update_slider()" disabled v-if="value === max">&gt;</v-btn>
                   </v-card>
                 </v-col>
               </v-row>
@@ -65,8 +67,13 @@ export default {
   name: 'viewGame',
   props: ['players', 'items', 'value', 'max'],
   data: () => ({
-    
+
   }),
+    methods: {
+        update_slider() {
+            this.$emit('changeValue', this.value)
+        }
+    }
 };
 </script>
 
