@@ -26,11 +26,7 @@ export default {
     }, {
       name: 'XxJadxX',
       img: 'https://pbs.twimg.com/profile_images/1092700380222406656/wkhrxlhD.jpg',
-<<<<<<< HEAD
-      color: 'https://tools-profi.ru/upload/iblock/2da/2da16b51b08195c8988a13487cbf9d04.jpg'
-=======
       color: 'https://www.marmarland.com/2101/742.jpg'
->>>>>>> 6afc009cabac37e343a09c66cad8d3a39e6ce047
     }],
     value: 85,
     items: [
