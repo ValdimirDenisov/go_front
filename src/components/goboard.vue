@@ -96,11 +96,12 @@ export default {
     name: 'goBoard',
     props: {
         size: Number,
-        value: Number
+        value: Number,
+        moves: Array,
     },
     mounted() {
-        this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)));
-        this.value.onChange()
+        console.log(this.moves); 
+        this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)), this.size);
         this.setButtons(this.matrix);
     }, data() {
         return {
@@ -203,11 +204,11 @@ export default {
             matrix.push(mas);
             return matrix;
         },
-        toMatrix(res) {
+        toMatrix(res, size) {
             let matrix = [];
             let mas = [];
             let inf = 123;
-            for (let i = 0; i <= this.size + 1; i++) {
+            for (let i = 0; i <= size + 1; i++) {
                 mas.push(inf);
             }
             matrix.push(mas);
@@ -215,7 +216,7 @@ export default {
             mas.push(inf);
             for (let i = 0; i < res.length; i++) {
                 mas.push(res[i]);
-                if ((i + 1) % this.size == 0) {
+                if ((i + 1) % size == 0) {
                     mas.push(inf);
                     matrix.push(mas);
                     mas = [];
@@ -223,7 +224,7 @@ export default {
                 }
             }
             mas = [];
-            for (let i = 0; i <= this.size + 1; i++) {
+            for (let i = 0; i <= size + 1; i++) {
                 mas.push(inf);
             }
             matrix.push(mas);
@@ -255,8 +256,24 @@ export default {
             res[i][j].classList.add(color);
             this.checkNeighbours(i, j);
         },
-        updateBoard(current_move){
-            console.log(current_move)
+        updateBoard(current_move, moves, size){
+            let classes_black = 'black-ball' + String(size);
+            let classes_white = 'white-ball' + String(size);
+            for (let i = 1; i <= size; i++) {
+                for (let j = 1; j <= size; j++) {
+                    this.matrix[i][j].classList.remove(classes_black, classes_white);
+                }
+            }
+            let mas = moves
+            for (let i = 0; i < current_move; i++) {
+                console.log(mas[i])
+                if (mas[i]['color'] == 'black') {
+                    this.setPoint(this.matrix, mas[i]['coords'][0], mas[i]['coords'][1], classes_black);
+                    
+                } else {
+                    this.setPoint(this.matrix, mas[i]['coords'][0], mas[i]['coords'][1], classes_white);
+                }
+            }
         }
     }
     

@@ -2,7 +2,7 @@
     <v-app>
         <v-main>
             <viewGame :players="players" :items="items" :value="value" :max="max" v-on:changeValue="change($event)">
-                <goBoard :size="19" :value="value"/>
+                <goBoard ref="board" :size="size" :value="value" :moves="move"/>
             </viewGame>
         </v-main>
     </v-app>
@@ -24,6 +24,7 @@ export default {
         players: [{}, {}],
         value: 0,
         max: 15,
+		move: [],
         items: [
             {header: 'Информация'},
             {title: 'Размер', subtitle: '13Х13'},
@@ -39,9 +40,11 @@ export default {
     }),
     mounted() {
         this.axios.get(this.URL).then((response) => {
-            console.log(response['data']);
+            
             let d = response['data'];
-            this.size = +d['size'];
+			this.move = d['moves'];
+            console.log(this.moves);
+			this.size = +d['size'];
             this.max = d['moves'].length;
             this.items[1]['subtitle'] = d['size'] + 'X' + d['size'];
             this.items[3]['subtitle'] = d['date'];
@@ -64,7 +67,8 @@ export default {
     methods: {
         change(a){
             this.value = a
-            goBoard.methods.updateBoard(this.value)
+			console.log(goBoard);
+            this.$refs.board.updateBoard(this.value, this.move, this.size)
         }
     }
 
