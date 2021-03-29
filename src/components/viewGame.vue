@@ -7,7 +7,7 @@
             </v-card>
           </v-col>
           <v-col cols="10" md="4" class="d-flex" >
-            <v-card class="pa-2 " style="width:300px;" outlined tile >
+            <v-card class="pa-2 " style="width:330px;" outlined tile >
               Игроки
               <v-list subheader>
                 <v-list-item v-for="player in players" :key="player">
@@ -39,23 +39,76 @@
                 </v-col>
               </v-row>
               <template >
-                  <v-card style="margin-top: 15px;">
-                      <v-list two-line>
-                        <template v-for="(item, index) in items.slice(0, 8)">
-                          <v-subheader v-if="item.header" :key="item.header">
-                            {{ item.header }}
-                          </v-subheader>
-                          <v-divider v-else-if="item.divider" :key="index"></v-divider>
-                          <v-list-item v-else :key="item.title">
-                            <v-list-item-content>
-                              <v-list-item-title v-html="item.title"></v-list-item-title>
-                              <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
-                            </v-list-item-content>
-                          </v-list-item>
-                        </template>
-                      </v-list>
-                  </v-card>
+				<v-container fluid>
+					<v-data-iterator :items="items" :items-per-page.sync="itemsPerPage" hide-default-footer>
+						<template v-slot:default="props">
+							<v-row>
+								<v-col v-for="item in props.items" :key="item.name">
+									<v-card>
+										<v-card-title class="subheading font-weight-bold">
+											{{ item.name }}
+										</v-card-title>
+										<v-divider></v-divider>
+										<v-list dense>
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Размер:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.heigth }}
+												</v-list-item-content>
+											</v-list-item>	
+											
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Дата:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.data }}
+												</v-list-item-content>
+											</v-list-item>	
+											
+											
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Результат:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.result }}
+												</v-list-item-content>
+											</v-list-item>	
+
+											
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Тип матча:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.type }}
+												</v-list-item-content>
+											</v-list-item>	
+
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Handicap:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.handicap }}
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Коми:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.komi }}
+												</v-list-item-content>
+											</v-list-item>
+
+											<v-list-item style="margin-top: -12px">
+												<v-list-item-content>Правила:</v-list-item-content>
+												<v-list-item-content class="align-end">
+													{{ item.rules }}
+												</v-list-item-content>
+											</v-list-item>
+										</v-list>
+									</v-card>
+								</v-col>
+							</v-row>
+						</template>
+					</v-data-iterator>
+				</v-container>
               </template>
+				<v-btn block color="primary" elevation="2" @click="goBack()">Назад</v-btn>
             </v-card>
           </v-col>
         </v-row>
@@ -67,11 +120,15 @@
 		name: 'viewGame',
 		props: ['players', 'items', 'value', 'max'],
 		data: () => ({
-			
+			itemsPerPage: 1,
+
 		}),
 		methods: {
 			update_slider() {
 				this.$emit('changeValue', this.value)
+			},
+			goBack() {
+				this.$emit('goBack', true)
 			}
 		}
 	};

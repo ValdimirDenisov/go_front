@@ -102,7 +102,7 @@ export default {
     mounted() {
         console.log(this.moves); 
         this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)), this.size);
-        this.setButtons(this.matrix);
+        // this.setButtons(this.matrix);
     }, data() {
         return {
             arrDigit9: ['9', '8', '7', '6', '5', '4', '3', '2', '1'],
@@ -262,6 +262,7 @@ export default {
             for (let i = 1; i <= size; i++) {
                 for (let j = 1; j <= size; j++) {
                     this.matrix[i][j].classList.remove(classes_black, classes_white);
+                    this.matrix[i][j].children[0].classList.remove('opacityClass');
                 }
             }
             let mas = moves
@@ -274,6 +275,7 @@ export default {
                     this.setPoint(this.matrix, mas[i]['coords'][0], mas[i]['coords'][1], classes_white);
                 }
             }
+            this.matrix[mas[current_move-1]['coords'][0]][mas[current_move-1]['coords'][1]].children[0].classList.add('opacityClass')
         }
     }
     
@@ -282,6 +284,9 @@ export default {
 </script>
 
 <style>
+.opacityClass {
+    opacity: 1 !important;
+}
 .conteiner {
     box-sizing: initial !important;
     text-align: left !important;
@@ -379,9 +384,9 @@ export default {
     margin-left: 2px;
 }
 
-.table-column-play-item19:hover .item-target19 {
+/* .table-column-play-item19:hover .item-target19 {
     opacity: 1;
-}
+} */
 
 .black-ball19 {
     border-radius: 100%;
@@ -499,9 +504,9 @@ export default {
     margin-left: 2px;
 }
 
-.table-column-play-item13:hover .item-target13 {
+/* .table-column-play-item13:hover .item-target13 {
     opacity: 1;
-}
+} */
 
 .black-ball13 {
     border-radius: 100%;
@@ -618,9 +623,9 @@ export default {
     margin-left: 8px;
 }
 
-.table-column-play-item9:hover .item-target9 {
+/* .table-column-play-item9:hover .item-target9 {
     opacity: 1;
-}
+} */
 
 .black-ball9 {
     border-radius: 100%;

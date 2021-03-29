@@ -2,7 +2,7 @@
     <v-app>
         <v-main class="text-center ma-auto" style="width: 1000px">
 			<TopTable :players="playerses" v-on:clickValue="getGame($event)" v-if="flag1"/>
-            <viewGame :players="players" :items="items" :value="value" :max="max" v-on:changeValue="change($event)" v-if="flag">
+            <viewGame :players="players" :items="items" :value="value" :max="max" v-on:changeValue="change($event)" v-on:goBack="changeFlags($event)" v-if="flag">
                 <goBoard ref="board" :size="size" :value="value" :moves="move"/>
             </viewGame>
         </v-main>
@@ -32,15 +32,16 @@ export default {
         max: 15,
 		move: [],
         items: [
-            {header: 'Информация'},
-            {title: 'Размер', subtitle: '13Х13'},
-            {divider: true, inset: true},
-            {title: 'Дата', subtitle: '28 марта 2021'},
-            {divider: true, inset: true},
-            {title: 'Результат', subtitle: '8.5'},
-            {divider: true, inset: true},
-            {title: 'Тип матча', subtitle: 'Рейтинговый'},
-            {divider: true, inset: true},
+			{
+				name: 'Информация',
+				heigth: '13Х13',
+				data: '28 марта 2021',
+				result: 8.5,
+				type: 'Рейтинговый',
+				komi: 4.0,
+				handicap: 0,
+				rules: "Japanese",
+			}
         ],
         URL: 'http://127.0.0.1:8080/api/top'
     }),
@@ -50,6 +51,10 @@ export default {
 		})
     },
     methods: {
+		changeFlags(x) {
+			this.flag = false
+			this.flag1 = x
+		},
         change(a){
             this.value = a
 			console.log(goBoard);
@@ -62,13 +67,16 @@ export default {
 			this.axios.get(URL).then((response) => {
 				let d = response['data'];
 				this.move = d['moves'];
-				console.log(this.moves);
+				console.log(d);
 				this.size = +d['size'];
 				this.max = d['moves'].length;
-				this.items[1]['subtitle'] = d['size'] + 'X' + d['size'];
-				this.items[3]['subtitle'] = d['date'];
-				this.items[5]['subtitle'] = d['score'];
-				this.items[7]['subtitle'] = d['gameType'];
+				this.items[0]['heigth'] = d['size'] + 'X' + d['size'];
+				this.items[0]['data'] = d['date'];
+				this.items[0]['result'] = d['score'];
+				this.items[0]['type'] = d['gameType'];
+				this.items[0]['handicap'] = d['handicap']
+				this.items[0]['komi'] = d['komi']
+				this.items[0]['rules'] = d['rules']
 				this.players[0] = {
 					'name': d['players']['white']['name'] + ' ' + d['players']['white']['rank'],
 					'img': d['players']['white']['avatar'],
