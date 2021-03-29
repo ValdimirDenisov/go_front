@@ -283,7 +283,8 @@ export default {
 
 <style>
 .conteiner {
-    box-sizing: initial;
+    box-sizing: initial !important;
+    text-align: left !important;
 }
 
 .table-conteiner19 {

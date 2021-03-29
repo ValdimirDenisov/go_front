@@ -1,12 +1,12 @@
 <template>
     <v-container class="grey lighten-5">
-        <v-row no-gutters class=" d-flex align-stretch">
+        <v-row no-gutters class=" d-flex align-stretch"> 
           <v-col md="auto" class="d-flex">
             <v-card class="pa-2"  outlined tile>
               <slot> </slot>
             </v-card>
           </v-col>
-          <v-col cols="10" md="5" class="d-flex" >
+          <v-col cols="10" md="4" class="d-flex" >
             <v-card class="pa-2 " style="width:300px;" outlined tile >
               Игроки
               <v-list subheader>
@@ -27,7 +27,7 @@
               <v-row no-gutters >
                 <v-col>
                   <v-card class="pa-2" outlined tile>
-                    <v-btn block color="primary" elevation="2" large @click="value = value - 1;update_slider()" v-if="value > 0">&lt;</v-btn>
+					<v-btn block color="primary" elevation="2" large @click="value = value - 1;update_slider()" v-if="value > 0">&lt;</v-btn>
                     <v-btn block color="primary" elevation="2" large @click="value = value - 1;update_slider()" disabled v-if="value === 0">&lt;</v-btn>
                   </v-card>
                 </v-col>
@@ -59,26 +59,26 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
+    </v-container>
 </template>
 
 <script>
-export default {
-  name: 'viewGame',
-  props: ['players', 'items', 'value', 'max'],
-  data: () => ({
-
-  }),
-    methods: {
-        update_slider() {
-            this.$emit('changeValue', this.value)
-        }
-    }
-};
+	export default {
+		name: 'viewGame',
+		props: ['players', 'items', 'value', 'max'],
+		data: () => ({
+			
+		}),
+		methods: {
+			update_slider() {
+				this.$emit('changeValue', this.value)
+			}
+		}
+	};
 </script>
 
 <style>
 .v-image__image--preload{
-    filter: unset!important;
+    filter: unset !important;
 }
 </style>
