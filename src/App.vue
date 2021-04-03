@@ -40,10 +40,11 @@ export default {
 				type: 'Рейтинговый',
 				komi: 4.0,
 				handicap: 0,
+				time: '',
 				rules: "Japanese",
 			}
         ],
-        URL: 'http://127.0.0.1:8080/api/top'
+        URL: 'http://127.0.0.1:8080/api/top/'
     }),
     mounted() {
         this.axios.get(this.URL).then((response) => {
@@ -57,7 +58,6 @@ export default {
 		},
         change(a){
             this.value = a
-			console.log(goBoard);
             this.$refs.board.updateBoard(this.value, this.move, this.size)
         },
 		getGame(url) {
@@ -67,16 +67,16 @@ export default {
 			this.axios.get(URL).then((response) => {
 				let d = response['data'];
 				this.move = d['moves'];
-				console.log(d);
 				this.size = +d['size'];
 				this.max = d['moves'].length;
 				this.items[0]['heigth'] = d['size'] + 'X' + d['size'];
 				this.items[0]['data'] = d['date'];
 				this.items[0]['result'] = d['score'];
 				this.items[0]['type'] = d['gameType'];
-				this.items[0]['handicap'] = d['handicap']
-				this.items[0]['komi'] = d['komi']
-				this.items[0]['rules'] = d['rules']
+				this.items[0]['handicap'] = d['handicap'];
+				this.items[0]['time'] = d['time'];
+				this.items[0]['komi'] = d['komi'];
+				this.items[0]['rules'] = d['rules'];
 				this.players[0] = {
 					'name': d['players']['white']['name'] + '[' + d['players']['white']['rank'] + ']',
 					'img': d['players']['white']['avatar'],

@@ -125,12 +125,24 @@
 		}),
 		methods: {
 			update_slider() {
-				this.$emit('changeValue', this.value)
-				if (this.time[this.value].color == 'white') {
-					this.players[0].time = this.time[this.value].time
+				if (this.time[this.value].color === 'white') {
+					this.players[0].time = this.time[this.value].time;
+                    let prevMove = this.value;
+                    while (prevMove >= 0 && this.time[prevMove].color !== 'black') {
+						prevMove--;
+                    }
+                    if (prevMove === -1) this.players[1].time = this.items[0]['time']
+					else this.players[1].time = this.time[this.value].time;
 				} else {
-					this.players[1].time = this.time[this.value].time
+					this.players[1].time = this.time[this.value].time;
+					let prevMove = this.value;
+					while (prevMove >= 0 && this.time[prevMove].color !== 'white') {
+						prevMove--;
+					}
+					if (prevMove === -1) this.players[0].time = this.items[0]['time']
+					else this.players[0].time = this.time[this.value].time;
 				}
+				this.$emit('changeValue', this.value)
 			},
 			goBack() {
 				this.$emit('goBack', true)

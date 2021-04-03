@@ -100,7 +100,6 @@ export default {
         moves: Array,
     },
     mounted() {
-        console.log(this.moves); 
         this.matrix = this.toMatrix(document.querySelectorAll('.table-column-play-item' + String(this.size)), this.size);
         // this.setButtons(this.matrix);
     }, data() {
@@ -267,7 +266,6 @@ export default {
             }
             let mas = moves
             for (let i = 0; i < current_move; i++) {
-                console.log(mas[i])
                 if (mas[i]['color'] == 'black') {
                     this.setPoint(this.matrix, mas[i]['coords'][0], mas[i]['coords'][1], classes_black);
                     
