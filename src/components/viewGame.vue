@@ -1,13 +1,13 @@
 <template>
-    <v-container class="grey lighten-5">
+    <v-container style="width: 1140px" class="">
         <v-row no-gutters class=" d-flex align-stretch"> 
           <v-col md="auto" class="d-flex">
             <v-card class="pa-2"  outlined tile>
               <slot> </slot>
             </v-card>
           </v-col>
-          <v-col cols="10" md="4" class="d-flex" >
-            <v-card class="pa-2 " style="width:330px;" outlined tile >
+          <v-col cols="13" md="5" class="d-flex" >
+            <v-card class="pa-2 " style="width:380px;" outlined tile >
               Игроки
               <v-list subheader>
                 <v-list-item v-for="player in players" :key="player">
@@ -15,7 +15,7 @@
                     <v-img :lazy-src="player.alt" :src="player.img"></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title v-text="player.name"></v-list-item-title>
+                    <v-list-item-title v-text="player.name+' (' + player.time +')'"></v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-avatar>
                     <v-img :src="player.color"></v-img>
@@ -118,7 +118,7 @@
 <script>
 	export default {
 		name: 'viewGame',
-		props: ['players', 'items', 'value', 'max'],
+		props: ['players', 'items', 'value', 'max', "time"],
 		data: () => ({
 			itemsPerPage: 1,
 
@@ -126,6 +126,11 @@
 		methods: {
 			update_slider() {
 				this.$emit('changeValue', this.value)
+				if (this.time[this.value].color == 'white') {
+					this.players[0].time = this.time[this.value].time
+				} else {
+					this.players[1].time = this.time[this.value].time
+				}
 			},
 			goBack() {
 				this.$emit('goBack', true)

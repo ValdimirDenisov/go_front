@@ -2,7 +2,7 @@
     <v-app>
         <v-main class="text-center ma-auto" style="width: 1000px">
 			<TopTable :players="playerses" v-on:clickValue="getGame($event)" v-if="flag1"/>
-            <viewGame :players="players" :items="items" :value="value" :max="max" v-on:changeValue="change($event)" v-on:goBack="changeFlags($event)" v-if="flag">
+            <viewGame :players="players" :items="items" :value="value" :max="max" :time='move' v-on:changeValue="change($event)" v-on:goBack="changeFlags($event)" v-if="flag">
                 <goBoard ref="board" :size="size" :value="value" :moves="move"/>
             </viewGame>
         </v-main>
@@ -78,16 +78,18 @@ export default {
 				this.items[0]['komi'] = d['komi']
 				this.items[0]['rules'] = d['rules']
 				this.players[0] = {
-					'name': d['players']['white']['name'] + ' ' + d['players']['white']['rank'],
+					'name': d['players']['white']['name'] + '[' + d['players']['white']['rank'] + ']',
 					'img': d['players']['white']['avatar'],
-					'color': 'https://pbs.twimg.com/ext_tw_video_thumb/1130497796958838784/pu/img/XZj79ABYvAjiQMJr.jpg',
-					'alt': 'https://it.oplus.ru/uploads/gallery/user.png'
+					'color': 'https://img.oboilux.ru/upload/iblock/bf0/bf0b666dd13a4fcec8ebc656d0bc48f1.jpg',
+					'alt': 'https://it.oplus.ru/uploads/gallery/user.png',
+					'time': d['time']
 				}
 				this.players[1] = {
-					'name': d['players']['black']['name'] + ' ' + d['players']['black']['rank'],
+					'name': d['players']['black']['name'] + '[' + d['players']['black']['rank'] + ']',
 					'img': d['players']['black']['avatar'],
-					'color': 'https://www.marmarland.com/2101/742.jpg',
-					'alt': 'https://it.oplus.ru/uploads/gallery/user.png'
+					'color': 'https://cdn.photosight.ru/sight/2006/06/05/1469552.jpg',
+					'alt': 'https://it.oplus.ru/uploads/gallery/user.png',
+					'time': d['time']
 				}
 			});
 		}
